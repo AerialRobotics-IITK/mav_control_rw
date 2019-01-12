@@ -34,9 +34,9 @@ void RcInterfaceAci::rcCallback(const sensor_msgs::JoyConstPtr& msg)
   last_data_.timestamp = msg->header.stamp;
 
   if (is_on_) {
-    last_data_.right_up_down = msg->axes[0];
-    last_data_.right_side = -msg->axes[1];
-    last_data_.left_up_down = msg->axes[2];
+    last_data_.right_up_down = msg->axes[1];
+    last_data_.right_side = msg->axes[2];
+    last_data_.left_up_down = msg->axes[0];
     last_data_.left_side = -msg->axes[3];
 
     if (msg->axes[5] > 0.0)

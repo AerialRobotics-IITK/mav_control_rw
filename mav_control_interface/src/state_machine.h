@@ -292,7 +292,7 @@ private:
       command.yaw_rate = -evt.rc_data.left_side * fsm.parameters_.rc_max_yaw_rate_command_;
       constexpr double thrust_below_hovering_factor = 0.8;
       command.thrust.z() = (evt.rc_data.left_up_down + 1.0) * fsm.controller_->getMass() * 9.81 * thrust_below_hovering_factor;
-      fsm.PublishAttitudeCommand(command);
+      fsm.PublishAttitudeCommand(command); 
     }
   };
 
