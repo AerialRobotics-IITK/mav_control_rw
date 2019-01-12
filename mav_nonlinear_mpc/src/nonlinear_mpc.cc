@@ -375,6 +375,7 @@ void NonlinearModelPredictiveControl::calculateRollPitchYawrateThrustCommand(
   double roll_ref = acadoVariables.u[0];
   double pitch_ref = acadoVariables.u[1];
   double thrust_ref = acadoVariables.u[2];
+  
 
   if (std::isnan(roll_ref) || std::isnan(pitch_ref) || std::isnan(thrust_ref)
       || acado_status != 0) {

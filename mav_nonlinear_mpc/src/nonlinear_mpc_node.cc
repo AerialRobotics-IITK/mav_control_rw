@@ -153,7 +153,6 @@ bool NonLinearModelPredictiveControllerNode::getPredictedState(
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "NonLinearModelPredictiveControllerNode");
-
   ros::NodeHandle nh, private_nh("~");
 
   std::shared_ptr<mav_control::NonLinearModelPredictiveControllerNode> mpc(
