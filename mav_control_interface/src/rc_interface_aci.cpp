@@ -23,9 +23,14 @@ namespace mav_control_interface {
 RcInterfaceAci::RcInterfaceAci(const ros::NodeHandle& nh)
     : RcInterfaceBase(),
       nh_(nh),
+      offboard_(false),
       is_on_(false)
+      
 {
   rc_sub_ = nh_.subscribe("rc", 1, &RcInterfaceAci::rcCallback, this);
+  full_offboard_server_ = nh_.advertiseService("full_offboard",
+                                                      &RcInterfaceAci::FullOffboardCallback,
+                                                      this);
 }
 
 void RcInterfaceAci::rcCallback(const sensor_msgs::JoyConstPtr& msg)
@@ -50,6 +55,9 @@ void RcInterfaceAci::rcCallback(const sensor_msgs::JoyConstPtr& msg)
       last_data_.control_mode = RcData::ControlMode::ALTITUDE_CONTROL;
     else
       last_data_.control_mode = RcData::ControlMode::POSITION_CONTROL;
+      
+    if(offboard_)
+      last_data_.left_up_down = 0;
 
     last_data_.wheel = msg->axes[6];
   }
@@ -102,6 +110,13 @@ float RcInterfaceAci::getStickDeadzone() const
 bool RcInterfaceAci::isRcOn(const sensor_msgs::JoyConstPtr& msg) const
 {
   return (msg->buttons[0] == 1);
+}
+
+bool RcInterfaceAci::FullOffboardCallback(std_srvs::Empty::Request& request,
+                                                         std_srvs::Empty::Response& response)
+{
+  offboard_ = true;
+  return true;
 }
 
 }  // end namespace mav_control_interface

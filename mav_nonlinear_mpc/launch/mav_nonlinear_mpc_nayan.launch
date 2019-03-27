@@ -1,0 +1,17 @@
+<launch>
+  <arg name="mav_name" default="nayan" />
+  <arg name="namespace" default="$(arg mav_name)"/>   
+  <group ns="$(arg namespace)">
+    <node name="mav_nonlinear_mpc" pkg="mav_nonlinear_mpc" type="nonlinear_mpc_node" respawn="true" clear_params="true" output="log">
+      <remap from="odometry" to="rovio/odometry" />
+      <rosparam file="$(find mav_nonlinear_mpc)/resources/nonlinear_mpc_$(arg mav_name).yaml" />
+      <rosparam file="$(find mav_disturbance_observer)/resources/disturbance_observer_$(arg mav_name).yaml"/>
+      <remap from="rc" to="mavros/rc/in"/>
+      <param name="reference_frame" value="world"/> 
+      <param name="simulation" value="false"/> 
+	    <!-- <param name="verbose" value="true"/> -->
+      <param name="autopilot_interface" value="mavros"/>
+      <remap from="command/roll_pitch_yawrate_thrust" to="mavros/setpoint_raw/roll_pitch_yawrate_thrust"/>
+    </node>
+  </group>
+</launch>

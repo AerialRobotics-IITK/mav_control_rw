@@ -20,6 +20,7 @@
 #define RC_INTERFACE_ACI_H_
 
 #include <mav_control_interface/rc_interface.h>
+#include <std_srvs/Empty.h>
 
 namespace mav_control_interface {
 
@@ -44,6 +45,10 @@ class RcInterfaceAci : public RcInterfaceBase {
 
   RcData last_data_;
   bool is_on_;
+  bool offboard_;
+  ros::ServiceServer full_offboard_server_;
+
+  bool FullOffboardCallback(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response);
 };
 }  // end namespace mav_control_interface
 #endif /* RC_INTERFACE_H_ */
