@@ -3,6 +3,18 @@ mav_control_rw [![Build Status](https://travis-ci.org/ethz-asl/mav_control_rw.sv
 
 Control strategies for rotary wing Micro Aerial Vehicles (MAVs) using ROS
 
+## Modified version of the fork  
+list of mods
+* changed for the mode-1 transmitter 
+* removed simulation controllers like mav_lowlevel_attitude_controller, linear mpc
+## Things that original version does not tell you
+* channel #5 is dedicated to the state machine inside the MPC. 
+  * Low value -> Manual control through mpc [if MAV is in offboard]
+  * High value -> RcTeleOp and position control through mpc [if MAV is in offboard]
+    * MAV only go in position hold if you are holding thrust at the center.
+    
+***Reference: check mav_control_interface module***
+
 Overview
 ------
 
